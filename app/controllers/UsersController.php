@@ -14,20 +14,21 @@ class UsersController extends AbstractController
         $this->user_factory = new UserFactory();
     }
 
-    public function create_user(Base $app)
+    public function create_user()
     {
-        $data = json_decode($app->get('BODY'), true);
-        $this->make_response(function () use ($data) {
+        $this->make_response(function () {
+            $data = $this->get_body_data();
             $user = $this->user_factory->make_with_password_hashing($data);
             $this->repository->create($user);
             return new JsonResponse(200, ['id' => $user->getId()]);
         });
     }
 
-    public function login(Base $app)
+    public function login()
     {
-        $data = json_decode($app->get('BODY'), true);
-        $this->make_response(function () use ($data) {
+        $this->make_response(function () {
+            $data = $this->get_body_data();
+
             if (!array_key_exists(User::EMAIL, $data)) {
                 return new JsonErrorResponse(422, "field 'email' is missing");
             }
@@ -53,11 +54,11 @@ class UsersController extends AbstractController
         });
     }
 
-    public function update_user(Base $app)
+    public function update_user()
     {
-        $this->make_response(function () use ($app) {
+        $this->make_response(function () {
             $this->authorized_or_forbidden();
-            $data = json_decode($app->get('BODY'), true);
+            $data = $this->get_body_data();
             $this->current_user->update($data);
             $this->repository->update($this->current_user);
             return new EmptyResponse();
