@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  default:
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: ame-php-apache
+    container_name: ame-pa-web
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www/html
+    links:
+      - db
+    networks:
+      - default
+
+  db:
+    image: mysql:latest
+    container_name: ame-pa-db
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ame_pa_db
+      MYSQL_USER: ame_pa_login
+      MYSQL_PASSWORD: dTUV2BVef_Wy
+      MYSQL_ROOT_PASSWORD: dTUV2BVef_Wy
+    networks:
+      - default

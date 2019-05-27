@@ -1,0 +1,229 @@
+swagger: "2.0"
+info:
+  title: Chat API
+  description: REST API JSON сервис для работы с системой чатов.
+  version: 1.0.0
+host: api.example.com
+schemes:
+  - https
+tags:
+  - name: Пользователи
+  - name: Сессии
+  - name: Группы
+  - name: Приглашения
+  - name: Комнаты
+  - name: Сообщения
+
+paths:
+  /users:
+    post:
+      tags:
+        - Пользователи
+      summary: Создает нового пользователя пользователя
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Запрос выполнен успешно
+        409:
+          description: Пользователь уже существует
+    patch:
+      tags:
+        - Пользователи
+      summary: Обновляет данные текущего пользователя
+      responses:
+        204:
+          description: Запрос выполнен успешно
+        404:
+          description: Пользователь не найден
+    delete:
+      tags:
+        - Пользователи
+      summary: Удаляет текущего пользователя
+      responses:
+        204:
+          description: Запрос выполнен успешно
+        404:
+          description: Пользователь не найден
+  /session:
+    post:
+      tags:
+        - Сессии
+      summary: Начинает новую сессию
+      responses:
+        204:
+          description: Запрос выполнен успешно
+        404:
+          description: Пользователь не найден
+    delete:
+      tags:
+        - Сессии
+      summary: Завершает текущую сессию
+      responses:
+        204:
+          description: Запрос выполнен успешно
+  /groups:
+    get:
+      tags:
+        - Группы
+      summary: Возвращает список групп доступных текущему пользователю
+      responses:
+        200:
+          description: Массив групп
+        401:
+          description: Пользователь неавторизован
+    post:
+      tags:
+        - Группы
+      summary: Создает новую группу
+      responses:
+        200:
+          description: Группа создана
+        401:
+          description: Пользователь неавторизован
+  /groups/{group_id}:
+    patch:
+      tags:
+        - Группы
+      summary: Обновляет данную группу
+      responses:
+        204:
+          description: Группа успешно обновлена
+        404:
+          description: Группа не найдена
+        401:
+          description: Пользователь неавторизован
+    delete:
+      tags:
+        - Группы
+      summary: Удаляет данную группу
+      responses:
+        204:
+          description: Группа успешно удалена
+        404:
+          description: Группа не найдена
+        401:
+          description: Пользователь неавторизован
+  /invitations:
+    post:
+      tags:
+        - Приглашения
+      summary: Добавляет пользователя в группу
+      responses:
+        204:
+          description: Запрос выполнен успешно
+        404:
+          description: Пользователь или группа не найдены
+        401:
+          description: Пользователь неавторизован
+    patch:
+      tags:
+        - Приглашения
+      summary: Обновляет статус пользователя в группе
+      responses:
+        204:
+          description: Запрос выполнен успешно
+        404:
+          description: Пользователь или группа не найдены
+        401:
+          description: Пользователь неавторизован
+    delete:
+      tags:
+        - Приглашения
+      summary: Удаляет пользователя из группы
+      responses:
+        204:
+          description: Запрос выполнен успешно
+        404:
+          description: Пользователь или группа не найдены
+        401:
+          description: Пользователь неавторизован
+  /rooms:
+    get:
+      tags:
+        - Комнаты
+      summary: Возвращает список комнат доступных пользователю
+      responses:
+        200:
+          description: Массив комнат
+        401:
+          description: Пользователь неавторизован
+    post:
+      tags:
+        - Комнаты
+      summary: Создает новую комнату
+      responses:
+        204:
+          description: Комната успешно создана
+        401:
+          description: Пользователь неавторизован
+  /rooms/{room_id}:
+    patch:
+      tags:
+        - Комнаты
+      summary: Обновляет комнату
+      responses:
+        204:
+          description: Комната успешно обновлена
+        404:
+          description: Комната не найдена
+        401:
+          description: Пользователь неавторизован
+    delete:
+      tags:
+        - Комнаты
+      summary: Удаляет комнату
+      responses:
+        204:
+          description: Комната успешно удалена
+        404:
+          description: Комната не найдена
+        401:
+          description: Пользователь неавторизован
+    get:
+      tags:
+        - Сообщения
+      summary: Возвращает список сообщений в комнате
+      responses:
+        200:
+          description: Массив сообщений
+        404:
+          description: Комната не найдена
+        401:
+          description: Пользователь неавторизован
+    post:
+      tags:
+        - Сообщения
+      summary: Создает новое сообщение в комнате
+      responses:
+        200:
+          description: Сообщение успешно создано
+        404:
+          description: Комната не найдена
+        401:
+          description: Пользователь неавторизован
+  /rooms/{room_id}/{message_id}:
+    patch:
+      tags:
+        - Сообщения
+      summary: Обновляет сообщение в комнате
+      responses:
+        200:
+          description: Сообщение успешно обновлено
+        404:
+          description: Комната или сообщение не найдено
+        401:
+          description: Пользователь неавторизован
+    delete:
+      tags:
+        - Сообщения
+      summary: Удаляет сообщение в комнате
+      responses:
+        200:
+          description: Сообщение успешно удалено
+        404:
+          description: Комната или сообщение не найдено
+        401:
+          description: Пользователь неавторизован
+
+
