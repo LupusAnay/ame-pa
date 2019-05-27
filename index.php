@@ -1,12 +1,11 @@
 <?php
 
 date_default_timezone_set('Europe/Moscow');
-
+require 'vendor/autoload.php';
 
 function app_factory()
 {
-    $app = require('lib/base.php');
-
+    $app = \Base::instance();
     $app->config('app/config.ini');
     $app->config('app/routes.ini');
 
