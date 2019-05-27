@@ -101,8 +101,16 @@ abstract class AbstractController
         $this->app->clear('SESSION');
     }
 
+    /**
+     * @return mixed
+     * @throws ValidationError
+     */
     protected function get_body_data() {
-        return json_decode($this->app->get('BODY'), true);
+        $data = $this->app->get('BODY');
+        if (!$data) {
+            throw new ValidationError("body should not be empty");
+        }
+        return json_decode($data, true);
     }
 
     /**
